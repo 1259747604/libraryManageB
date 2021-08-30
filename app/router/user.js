@@ -5,4 +5,7 @@ module.exports = app => {
 
     // 注册
     router.post("/user/register", controller.user.register);
+
+    // 测试
+    router.get("/test", controller.test.test);
 };

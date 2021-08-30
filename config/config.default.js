@@ -10,7 +10,7 @@ module.exports = appInfo => {
    * built-in config
    * @type {Egg.EggAppConfig}
    **/
-  const config = exports = {};
+  const config = (exports = {});
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1630295582302_2615';
@@ -23,8 +23,14 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    credentials: true
+  };
+
   return {
     ...config,
-    ...userConfig,
+    ...userConfig
   };
 };
