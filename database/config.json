@@ -1,0 +1,26 @@
+{
+  "development": {
+    "dialect": "mysql",
+    "host": "192.168.153.130",
+    "port": 3306,
+    "database": "libraryWeb",
+    "username": "root",
+    "password": "111111Qqq."
+  },
+  "test": {
+    "dialect": "mysql",
+    "host": "192.168.153.130",
+    "port": 3306,
+    "database": "libraryWeb",
+    "username": "root",
+    "password": "111111Qqq."
+  },
+  "production": {
+    "dialect": "mysql",
+    "host": "192.168.153.130",
+    "port": 3306,
+    "database": "libraryWeb",
+    "username": "root",
+    "password": "111111Qqq."
+  }
+}

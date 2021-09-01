@@ -29,6 +29,21 @@ module.exports = appInfo => {
     credentials: true
   };
 
+  config.sequelize = {
+    dialect: 'mysql',
+    host: '192.168.153.130',
+    port: 3306,
+    database: 'libraryWeb',
+    username: 'root',
+    password: '111111Qqq.',
+    define: {
+      freezeTableName: true,
+      underscored: true,
+      timestamps: false
+    },
+  }
+
+
   return {
     ...config,
     ...userConfig

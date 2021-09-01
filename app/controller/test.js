@@ -5,7 +5,8 @@ const Controller = require('egg').Controller;
 class TestController extends Controller {
   async test() {
     const { ctx } = this;
-    ctx.helper.success('测试连接')
+    let res = await ctx.model.Test.findAll({limit: 1});
+    ctx.helper.success(res)
   }
 }
 
