@@ -16,7 +16,12 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1630295582302_2615';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['auth'];
+
+  config.auth = {
+    // 鉴权白名单
+    ignore: ['/user/login', "/user/register"]
+  };
 
   // add your user config here
   const userConfig = {
@@ -27,6 +32,10 @@ module.exports = appInfo => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
     credentials: true
+  };
+
+  config.security = {
+    csrf: false
   };
 
   config.sequelize = {
@@ -40,9 +49,12 @@ module.exports = appInfo => {
       freezeTableName: true,
       underscored: true,
       timestamps: false
-    },
-  }
+    }
+  };
 
+  config.jwt = {
+    secret: 'pikapika'
+  };
 
   return {
     ...config,
