@@ -22,6 +22,13 @@ const getUserInfoByToken = async function (token) {
   return await this.ctx.model.User.findById(id);
 };
 
+
+// 生成唯一id
+const genID = (length) =>  {
+  return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+}
+
+
 // 加密
 const encryp = require('../utils/encryp');
 
@@ -29,5 +36,6 @@ module.exports = {
   success,
   err,
   encryp,
-  getUserInfoByToken
+  getUserInfoByToken,
+  genID
 };

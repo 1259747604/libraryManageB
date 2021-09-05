@@ -11,7 +11,7 @@ class UploadController extends Controller {
       return ctx.helper.err(null, '请先选择上传文件');
     }
     const file = ctx.request.files[0];
-    const name = 'imgs/' + file.filename;
+    const name = `imgs/${ctx.helper.genID(10)}${path.extname(file.filename)}`;
     let result;
     try {
         result = await ctx.oss.put(name, file.filepath);
