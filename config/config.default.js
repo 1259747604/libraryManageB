@@ -20,7 +20,7 @@ module.exports = appInfo => {
 
   config.auth = {
     // 鉴权白名单
-    ignore: ['/user/login', "/user/register"]
+    ignore: ['/user/login', '/user/register']
   };
 
   // add your user config here
@@ -54,6 +54,25 @@ module.exports = appInfo => {
 
   config.jwt = {
     secret: 'pikapika'
+  };
+
+  config.multipart = {
+    mode: 'file',
+    fileSize: '50mb', // 接收文件大小
+    whitelist: [
+      // 允许接收的文件类型
+      '.png',
+      '.jpg'
+    ]
+  };
+
+  config.oss = {
+    client: {
+      region: 'oss-cn-hangzhou',
+      accessKeyId: 'LTAI5tFqFGQnvyBNgDby4MDW',
+      accessKeySecret: '0gNSiFtx9lOdMt5UpBYdXDRs7wW8AS',
+      bucket: 'ttengimg'
+    }
   };
 
   return {

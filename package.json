@@ -7,13 +7,16 @@
     "declarations": true
   },
   "dependencies": {
+    "ali-oss": "^6.16.0",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
     "egg-mysql": "^3.0.0",
+    "egg-oss": "^2.0.0",
     "egg-scripts": "^2.11.0",
     "egg-sequelize": "^6.0.0",
-    "mysql2": "^2.3.0"
+    "mysql2": "^2.3.0",
+    "mz": "^2.7.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
