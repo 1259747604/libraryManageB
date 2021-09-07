@@ -6,6 +6,9 @@ module.exports = app => {
     // 注册
     router.post("/user/register", controller.user.register);
 
+    // 获取用户信息
+    router.post("/user/getInfo", controller.user.getInfo);
+
     // 测试
     router.get("/test", controller.test.test);
 };

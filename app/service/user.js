@@ -73,6 +73,32 @@ class UserService extends Service {
       status: true
     };
   }
+
+  async getInfo() {
+    const { ctx } = this;
+    let userId = ctx.userIdObj.id;
+    try {
+      let res = await ctx.model.User.findById(userId);
+      res = {
+        id: res.id,
+        userName: res.userName,
+        roleIds: res.roleIds.split(','),
+        roles: res.roleNames.split(','),
+        icon: res.icon
+      };
+      return {
+        data: res,
+        msg: '',
+        status: true
+      };
+    } catch (error) {
+      return {
+        data: null,
+        msg: '用户信息获取失败',
+        status: false
+      };
+    }
+  }
 }
 
 module.exports = UserService;

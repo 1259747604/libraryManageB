@@ -7,9 +7,8 @@ module.exports = app => {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true, notNuLL: true },
     userName: { type: STRING(45),  field: 'user_name' },    
     password: STRING(200),
-    roleId: { type: INTEGER, defaultValue: 1, field: 'role_id' },  
-    roleName: { type: STRING(45), defaultValue: 1, field: 'role_name' },
-    isSuper: { type: BOOLEAN, defaultValue: false, field: 'is_super' },
+    roleIds: { type: STRING(100), defaultValue: '2', field: 'role_ids' },  
+    roleNames: { type: STRING(200), defaultValue: 'editor', field: 'role_names' },
     isDel: { type: BOOLEAN, defaultValue: false, field: 'is_del' },
     icon: STRING(200)
   });
