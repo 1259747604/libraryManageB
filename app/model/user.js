@@ -11,6 +11,7 @@ module.exports = app => {
     roleName: { type: STRING(45), defaultValue: 1, field: 'role_name' },
     isSuper: { type: BOOLEAN, defaultValue: false, field: 'is_super' },
     isDel: { type: BOOLEAN, defaultValue: false, field: 'is_del' },
+    icon: STRING(200)
   });
 
   // 查询某个用户通过用户名
