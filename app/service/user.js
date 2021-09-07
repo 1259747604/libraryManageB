@@ -82,7 +82,6 @@ class UserService extends Service {
       res = {
         id: res.id,
         userName: res.userName,
-        roleIds: res.roleIds.split(','),
         roles: res.roleNames.split(','),
         icon: res.icon
       };
