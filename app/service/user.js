@@ -74,6 +74,7 @@ class UserService extends Service {
     };
   }
 
+  // 获取用户信息
   async getInfo() {
     const { ctx } = this;
     let userId = ctx.userIdObj.id;
@@ -82,8 +83,12 @@ class UserService extends Service {
       res = {
         id: res.id,
         userName: res.userName,
-        roles: res.roleNames.split(','),
-        icon: res.icon
+        icon: res.icon,
+        sex: res.sex ? 1 : 0,
+        age: res.age,
+        phone: res.phone,
+        isRisk: res.isRisk,
+        roles: res.isAdmin ? ['admin'] : ['borrower'],
       };
       return {
         data: res,
