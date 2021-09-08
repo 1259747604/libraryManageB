@@ -32,26 +32,33 @@ class UserService extends Service {
 
     const token = this.app.jwt.sign({ id: userInfo.id }, this.app.config.jwt.secret, { expiresIn: '7d' });
     return {
-      data: token,
+      data: { token, roles: userInfo.isAdmin ? ['admin'] : ['borrower'] },
       msg: '登录成功',
       status: true
     };
   }
 
   // 注册
-  async register(name, pwd) {
+  async register(body) {
+    const { userName, password, sex, age, phone, icon } = body;
+    let errObj = {
+      msg: '注册失败，请完善注册信息',
+      status: false
+    };
     // 值完整性
-    if (!name || !pwd) {
-      return {
-        msg: '注册失败，请完善注册信息',
-        status: false
-      };
+    if (!userName || !password || !age || !phone || !icon) {
+      return errObj;
+    }
+
+    // 性别
+    if (![0, 1].includes(sex)) {
+      return errObj;
     }
 
     const { ctx } = this;
     const User = ctx.model.User;
     // 查询是否存在重名
-    let userInfo = await User.findByName(name);
+    let userInfo = await User.findByName(userName);
 
     if (userInfo) {
       return {
@@ -61,14 +68,18 @@ class UserService extends Service {
     }
     // 可以注册 进行密码加密
     let register = {
-      userName: name,
-      password: ctx.helper.encryp(pwd)
+      userName,
+      password: ctx.helper.encryp(password),
+      sex,
+      age,
+      phone,
+      icon
     };
 
     let res = await User.create(register);
 
     return {
-      data: res,
+      data: null,
       msg: '注册成功',
       status: true
     };
@@ -88,7 +99,7 @@ class UserService extends Service {
         age: res.age,
         phone: res.phone,
         isRisk: res.isRisk,
-        roles: res.isAdmin ? ['admin'] : ['borrower'],
+        roles: res.isAdmin ? ['admin'] : ['borrower']
       };
       return {
         data: res,

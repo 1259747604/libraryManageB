@@ -20,7 +20,7 @@ module.exports = appInfo => {
 
   config.auth = {
     // 鉴权白名单
-    ignore: ['/user/login', '/user/register']
+    ignore: ['/user/login', '/user/register', '/upload/img']
   };
 
   // add your user config here

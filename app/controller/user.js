@@ -19,9 +19,7 @@ class UserController extends Controller {
   // 注册
   async register() {
     const { ctx } = this;
-    const userName = ctx.request.body.userName;
-    const pwd = ctx.request.body.password;
-    let res = await ctx.service.user.register(userName, pwd);
+    let res = await ctx.service.user.register(ctx.request.body);
     if (res.status) {
       ctx.helper.success(res.data, res.msg);
     } else {
