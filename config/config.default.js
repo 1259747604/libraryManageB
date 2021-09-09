@@ -45,6 +45,7 @@ module.exports = appInfo => {
     database: 'libraryWeb',
     username: 'root',
     password: '111111Qqq.',
+    timezone: '+8:00',
     define: {
       freezeTableName: true,
       underscored: true,
