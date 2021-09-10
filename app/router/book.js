@@ -8,4 +8,7 @@ module.exports = app => {
 
   // 修改分类
   router.post('/book/editType', controller.book.editType);
+
+  // 删除分类
+  router.post('/book/delType', controller.book.delType);
 };

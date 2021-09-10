@@ -23,6 +23,16 @@ class BookController extends Controller {
     }
   }
 
+  async delType() {
+    const { ctx } = this;
+    let res = await ctx.service.book.delType(ctx.request.body);
+    if (res.status) {
+      ctx.helper.success(res.data, res.msg);
+    } else {
+      ctx.helper.err(null, res.msg);
+    }
+  }
+
   async typeList() {
     const { ctx } = this;
     let res = await ctx.service.book.typeList(ctx.request.body);

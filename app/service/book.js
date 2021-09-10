@@ -80,6 +80,40 @@ class BookService extends Service {
     }
   }
 
+  async delType(body) {
+    const { ids } = body;
+    const { ctx } = this;
+    const BookType = ctx.model.BookType;
+    const Book = ctx.model.Book;
+    
+    try {
+      await Book.destroy({
+        where: {
+          bookType:{
+            [Op.in]: ids
+          }
+        }
+      })
+      await BookType.destroy({
+        where: {
+          id:{
+            [Op.in]: ids
+          }
+        }
+      })
+      return {
+        data: null,
+        msg: '删除成功',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: `删除异常${error}`,
+        status: false
+      };
+    }
+  }
+
   async typeList(body) {
     const { ctx } = this;
     let { pageSize, pageNumber, name } = body;
