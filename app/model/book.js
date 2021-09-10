@@ -11,7 +11,18 @@ module.exports = app => {
     bookNum: { type: INTEGER, notNuLL: true, field: 'book_num', defaultValue: 0 },
     bookPrice: { type: STRING(45), notNuLL: true, field: 'book_price' },
     bookType: { type: INTEGER, notNuLL: true, field: 'book_type' },
+    isbn: { type: STRING(45), notNuLL: true,},
+    img: { type: STRING(200), notNuLL: true,},
     createTime: { type: DATE, notNuLL: true, field: 'create_time' }
   });
+
+  // 查询类名通过名字
+  Book.findByName = async function (bookName) {
+    return await this.findOne({
+      where: {
+        bookName
+      }
+    });
+  };
   return Book;
 };

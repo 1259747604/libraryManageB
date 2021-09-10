@@ -11,4 +11,19 @@ module.exports = app => {
 
   // 删除分类
   router.post('/book/delType', controller.book.delType);
+
+  // 添加图书
+  router.post('/book/addBook', controller.book.addBook);
+  
+  // 修改图书
+  router.post('/book/editBook', controller.book.editBook);
+  
+  // 删除图书
+  router.post('/book/delBook', controller.book.delBook);
+  
+  // 图书列表
+  router.post('/book/bookList', controller.book.bookList);
+ 
+  // 查询图书
+  router.post('/book/getBook', controller.book.getBook);
 };
