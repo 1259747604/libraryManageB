@@ -130,7 +130,7 @@ class UserService extends Service {
         userName: {
           [Op.like]: likeName
         }
-      },
+      }
     };
 
     if (pageNumber > 0) {
@@ -177,6 +177,60 @@ class UserService extends Service {
       };
     } catch (error) {
       return {
+        msg: error,
+        status: false
+      };
+    }
+  }
+
+  async updatePwd(body) {
+    const { ctx } = this;
+    let userId = ctx.userIdObj.id;
+    try {
+      await ctx.model.User.update(
+        {
+          password: ctx.helper.encryp(body.pwd)
+        },
+        {
+          where: {
+            id: userId
+          }
+        }
+      );
+      return {
+        data: true,
+        msg: '',
+        status: true
+      };
+    } catch (error) {
+      return {
+        data: null,
+        msg: error,
+        status: false
+      };
+    }
+  }
+
+  async checkPwd(body) {
+    const { ctx } = this;
+    let userId = ctx.userIdObj.id;
+    try {
+      let res = await ctx.model.User.findByPk(userId);
+      if (ctx.helper.encryp(body.pwd) === res.password) {
+        return {
+          data: true,
+          msg: '',
+          status: true
+        };
+      }
+      return {
+        data: false,
+        msg: '',
+        status: true
+      };
+    } catch (error) {
+      return {
+        data: null,
         msg: error,
         status: false
       };

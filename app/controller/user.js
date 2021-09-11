@@ -59,6 +59,26 @@ class UserController extends Controller {
       ctx.helper.err(null, res.msg);
     }
   }
+  
+  async checkPwd() {
+    const { ctx } = this;
+    let res = await ctx.service.user.checkPwd(ctx.request.body);
+    if (res.status) {
+      ctx.helper.success(res.data, res.msg);
+    } else {
+      ctx.helper.err(null, res.msg);
+    }
+  }
+  
+  async updatePwd() {
+    const { ctx } = this;
+    let res = await ctx.service.user.updatePwd(ctx.request.body);
+    if (res.status) {
+      ctx.helper.success(res.data, res.msg);
+    } else {
+      ctx.helper.err(null, res.msg);
+    }
+  }
 }
 
 module.exports = UserController;

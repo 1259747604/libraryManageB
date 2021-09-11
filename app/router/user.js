@@ -14,6 +14,12 @@ module.exports = app => {
     
     // 修改用户状态
     router.post("/user/editUserStatus", controller.user.editUserStatus);
+    
+    // 检查密码
+    router.post("/user/checkPwd", controller.user.checkPwd);
+    
+    // 更新密码
+    router.post("/user/updatePwd", controller.user.updatePwd);
 
     // 测试
     router.get("/test", controller.test.test);
