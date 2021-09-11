@@ -37,6 +37,28 @@ class UserController extends Controller {
       ctx.helper.err(null, res.msg);
     }
   }
+  
+  // 获取用户列表
+  async userList() {
+    const { ctx } = this;
+    let res = await ctx.service.user.userList(ctx.request.body);
+    if (res.status) {
+      ctx.helper.success(res.data, res.msg);
+    } else {
+      ctx.helper.err(null, res.msg);
+    }
+  }
+  
+  // 修改用户状态
+  async editUserStatus() {
+    const { ctx } = this;
+    let res = await ctx.service.user.editUserStatus(ctx.request.body);
+    if (res.status) {
+      ctx.helper.success(res.data, res.msg);
+    } else {
+      ctx.helper.err(null, res.msg);
+    }
+  }
 }
 
 module.exports = UserController;

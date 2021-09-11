@@ -8,6 +8,12 @@ module.exports = app => {
 
     // 获取用户信息
     router.post("/user/getInfo", controller.user.getInfo);
+    
+    // 获取用户列表
+    router.post("/user/userList", controller.user.userList);
+    
+    // 修改用户状态
+    router.post("/user/editUserStatus", controller.user.editUserStatus);
 
     // 测试
     router.get("/test", controller.test.test);

@@ -1,7 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
-
+const { Op } = require('sequelize');
 class UserService extends Service {
   // 登录
   async login(name, pwd) {
@@ -110,6 +110,74 @@ class UserService extends Service {
       return {
         data: null,
         msg: '用户信息获取失败',
+        status: false
+      };
+    }
+  }
+
+  async userList(body) {
+    const { ctx } = this;
+    let { pageSize, pageNumber, userName } = body;
+    const User = ctx.model.User;
+
+    let [likeName] = ['%%'];
+    if (userName) {
+      likeName = `%${userName}%`;
+    }
+
+    let searchObj = {
+      where: {
+        userName: {
+          [Op.like]: likeName
+        }
+      },
+    };
+
+    if (pageNumber > 0) {
+      searchObj.offset = (pageNumber - 1) * pageSize;
+      searchObj.limit = pageSize;
+    }
+    try {
+      let { count, rows } = await User.findAndCountAll(searchObj);
+      return {
+        data: {
+          total: count,
+          list: rows
+        },
+        msg: '',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: `查询失败:${error}`,
+        status: false
+      };
+    }
+  }
+
+  async editUserStatus(body) {
+    const { ctx } = this;
+    const { id, status } = body;
+    const User = ctx.model.User;
+
+    let obj = {
+      isRisk: status
+    };
+
+    try {
+      await User.update(obj, {
+        where: {
+          id
+        }
+      });
+      return {
+        data: null,
+        msg: '成功',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: error,
         status: false
       };
     }
