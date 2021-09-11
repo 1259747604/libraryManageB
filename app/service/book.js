@@ -438,7 +438,7 @@ class BookService extends Service {
       searchObj.where.userId = { [Op.eq]: userId };
     }
 
-    if(status || status === 0) {
+    if (status || status === 0) {
       searchObj.where.status = { [Op.eq]: status };
     }
 
@@ -475,8 +475,8 @@ class BookService extends Service {
       status: status
     };
 
-    if([3,5].includes(status)) {
-      obj.returnTime = new Date()
+    if ([3, 5].includes(status)) {
+      obj.returnTime = new Date();
     }
 
     try {
@@ -484,7 +484,7 @@ class BookService extends Service {
         const bookInfo = await Book.findByPk(bookId);
         await bookInfo.decrement('bookNum');
       }
-      if(status === 3) {
+      if ([3, 5].includes(status)) {
         const bookInfo = await Book.findByPk(bookId);
         await bookInfo.increment('bookNum');
       }
@@ -505,6 +505,22 @@ class BookService extends Service {
         status: false
       };
     }
+  }
+
+  async checkdateOut() {
+    const { ctx } = this;
+    const Borrow = ctx.model.Borrow;
+    await Borrow.update(
+      { status: 4 },
+      {
+        where: {
+          status: 1,
+          expectedReturnTime: {
+            [Op.lt]: new Date()
+          }
+        }
+      }
+    );
   }
 }
 
