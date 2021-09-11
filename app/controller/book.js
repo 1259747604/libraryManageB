@@ -62,6 +62,21 @@ class BookController extends Controller {
     const { ctx } = this;
     await this.baseController('getBook', ctx);
   }
+
+  async applyBorrow() {
+    const { ctx } = this;
+    await this.baseController('applyBorrow', ctx);
+  }
+
+  async borrowList() {
+    const { ctx } = this;
+    await this.baseController('borrowList', ctx);
+  }
+    
+  async editBorrowStatus() {
+    const { ctx } = this;
+    await this.baseController('editBorrowStatus', ctx);
+  }
 }
 
 module.exports = BookController;

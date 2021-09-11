@@ -178,7 +178,8 @@ class BookService extends Service {
       bookType: body.bookType,
       isbn: body.isbn,
       img: body.img,
-      createTime: new Date()
+      createTime: new Date(),
+      desc: body.desc
     };
 
     try {
@@ -220,7 +221,8 @@ class BookService extends Service {
       bookPrice: body.bookPrice,
       bookType: body.bookType,
       isbn: body.isbn,
-      img: body.img
+      img: body.img,
+      desc: body.desc
     };
 
     try {
@@ -366,6 +368,140 @@ class BookService extends Service {
     } catch (error) {
       return {
         msg: `查询失败:${error}`,
+        status: false
+      };
+    }
+  }
+
+  async applyBorrow(body) {
+    const { ctx } = this;
+    const Borrow = ctx.model.Borrow;
+    const Book = ctx.model.Book;
+
+    let obj = {
+      userId: body.userId,
+      userName: body.userName,
+      bookId: body.bookId,
+      recordTime: new Date(),
+      expectedReturnTime: body.expectedReturnTime
+    };
+
+    try {
+      // let bookInfo = await Book.findByPk(body.bookId);
+      // if (bookInfo) {
+      //   if(bookInfo.bookNum <= 0){
+      //     return {
+      //       msg: '申请失败',
+      //       status: false
+      //     };
+      //   }
+      //   await bookInfo.decrement('bookNum');
+      // }
+      await Borrow.create(obj);
+      return {
+        data: null,
+        msg: '申请成功',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: '申请失败',
+        status: false
+      };
+    }
+  }
+
+  async borrowList(body) {
+    const { ctx } = this;
+    let { pageSize, pageNumber, userId, userName, status } = body;
+    const Book = ctx.model.Book;
+    const Borrow = ctx.model.Borrow;
+    Borrow.belongsTo(Book, { foreignKey: 'bookId' });
+
+    let [likeName] = ['%%'];
+    if (userName) {
+      likeName = `%${userName}%`;
+    }
+
+    let searchObj = {
+      order: [['recordTime', 'DESC']],
+      where: {
+        userName: {
+          [Op.like]: likeName
+        }
+      },
+      include: {
+        model: Book
+      }
+    };
+    if (userId) {
+      searchObj.where.userId = { [Op.eq]: userId };
+    }
+
+    if(status || status === 0) {
+      searchObj.where.status = { [Op.eq]: status };
+    }
+
+    if (pageNumber > 0) {
+      searchObj.offset = (pageNumber - 1) * pageSize;
+      searchObj.limit = pageSize;
+    }
+
+    try {
+      let { count, rows } = await Borrow.findAndCountAll(searchObj);
+      return {
+        data: {
+          total: count,
+          list: rows
+        },
+        msg: '',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: `查询失败:${error}`,
+        status: false
+      };
+    }
+  }
+
+  async editBorrowStatus(body) {
+    const { ctx } = this;
+    const { id, status, bookId } = body;
+    const Book = ctx.model.Book;
+    const Borrow = ctx.model.Borrow;
+
+    let obj = {
+      status: status
+    };
+
+    if([3,5].includes(status)) {
+      obj.returnTime = new Date()
+    }
+
+    try {
+      if (status === 1) {
+        const bookInfo = await Book.findByPk(bookId);
+        await bookInfo.decrement('bookNum');
+      }
+      if(status === 3) {
+        const bookInfo = await Book.findByPk(bookId);
+        await bookInfo.increment('bookNum');
+      }
+
+      await Borrow.update(obj, {
+        where: {
+          id
+        }
+      });
+      return {
+        data: null,
+        msg: '成功',
+        status: true
+      };
+    } catch (error) {
+      return {
+        msg: error,
         status: false
       };
     }

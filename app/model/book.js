@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, INTEGER, BOOLEAN, DATE } = app.Sequelize;
+  const { STRING, INTEGER, BOOLEAN, DATE, TEXT } = app.Sequelize;
 
   const Book = app.model.define('book', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true, notNuLL: true },
@@ -13,7 +13,8 @@ module.exports = app => {
     bookType: { type: INTEGER, notNuLL: true, field: 'book_type' },
     isbn: { type: STRING(45), notNuLL: true,},
     img: { type: STRING(200), notNuLL: true,},
-    createTime: { type: DATE, notNuLL: true, field: 'create_time' }
+    createTime: { type: DATE, notNuLL: true, field: 'create_time' },
+    desc: { type: TEXT('tiny') , notNuLL: true,  }
   });
 
   // 查询类名通过名字

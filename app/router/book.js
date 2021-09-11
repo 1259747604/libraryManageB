@@ -26,4 +26,13 @@ module.exports = app => {
  
   // 查询图书
   router.post('/book/getBook', controller.book.getBook);
+
+  // 申请借阅
+  router.post('/book/applyBorrow', controller.book.applyBorrow);
+  
+  // 借阅列表
+  router.post('/book/borrowList', controller.book.borrowList);
+  
+  // 修改借阅状态
+  router.post('/book/editBorrowStatus', controller.book.editBorrowStatus);
 };
