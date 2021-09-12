@@ -14,7 +14,7 @@ module.exports = app => {
     isbn: { type: STRING(45), notNuLL: true,},
     img: { type: STRING(200), notNuLL: true,},
     createTime: { type: DATE, notNuLL: true, field: 'create_time' },
-    desc: { type: TEXT('tiny') , notNuLL: true,  }
+    desc: { type: TEXT(1234) , notNuLL: true,  }
   });
 
   // 查询类名通过名字
